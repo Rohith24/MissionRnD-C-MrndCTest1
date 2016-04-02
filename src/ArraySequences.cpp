@@ -35,15 +35,10 @@ int GetAP(int *a,int start,int end)
 	int iDiff = a[end] - a[start];
 	return iDiff;
 }
-int CheckGP(int *a,int len)
+int GetGP(int *a, int start, int end)
 {
-	int iRatio = a[1] / a[0];
-	for (int i = 0; i<len - 1; i++)
-	{
-		if ((a[i + 1] / a[i]) != iRatio)
-			return -1;
-	}
-	return 1;
+	int iRatio = a[end] / a[start];
+	return iRatio;
 }
 int * find_sequences(int *arr, int len)
 {
@@ -65,10 +60,10 @@ int * find_sequences(int *arr, int len)
 			ap--;
 		}
 		index = i;
-		if (arr[index + 2] / arr[index + 1] == arr[index + 1] / arr[index] && arr[index + 1] % arr[index] == 0 && gp)
+		if (GetGP(arr, index + 1, index + 2) == GetGP(arr, index, index + 1) && arr[index + 1] % arr[index] == 0 && gp)
 		{
 			final[4] = index;
-			while (arr[index + 2] / arr[index + 1] == arr[index + 1] / arr[index] && arr[index + 1] % arr[index] == 0)
+			while (GetGP(arr, index + 1, index + 2) == GetGP(arr, index, index + 1) && arr[index + 1] % arr[index] == 0)
 				index++;
 			final[5] = index + 1;
 			gp--;
