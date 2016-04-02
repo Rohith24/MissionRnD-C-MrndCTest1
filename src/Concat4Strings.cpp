@@ -29,5 +29,6 @@ Difficulty : Hard
 
 char * concat_4strings(char *s1, char *s2, char *s3, char *s4){
 	//Return the new string created.
+	
 	return NULL;
 }

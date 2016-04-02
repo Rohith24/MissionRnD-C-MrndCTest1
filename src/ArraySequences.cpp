@@ -30,8 +30,43 @@ Difficulty : Medium
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+int CheckAP(int *a,int start,int end)
+{
+	int iDiff = a[1] - a[0];
+	for (int i = start; i<end - 1; i++)
+	{
+		if ((a[i + 1] - a[i]) != iDiff)
+			return -1;
+	}
+	return 1;
+}
+int CheckGP(int *a,int len)
+{
+	int iRatio = a[1] / a[0];
+	for (int i = 0; i<len - 1; i++)
+	{
+		if ((a[i + 1] / a[i]) != iRatio)
+			return -1;
+	}
+	return 1;
+}
 
 int * find_sequences(int *arr, int len){
 	//Return final array which has 6indexes [AP1_S,AP1_E,AP2_S,AP2_E,GP1_S,GP2_E]
+	if (arr==NULL||len<3)
 	return NULL;
+	int index = 0,templen=len;
+	int AP1_S=0, AP1_E=0, AP2_S=0, AP2_E=0, GP1_S=0, GP2_E=0;
+	int Apmax = 0;
+	for (int i = 0; i < len-2; i++){
+		int j = i + 1;
+		int curr = CheckAP(arr, i, j);
+		while (curr == 1){
+			AP1_E = (j>Apmax) ? j : AP1_E;
+			AP1_S = i;
+			curr = CheckAP(arr, i, j);
+			j++;
+		}
+	}
+
 }
