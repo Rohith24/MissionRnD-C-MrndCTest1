@@ -55,18 +55,14 @@ int * find_sequences(int *arr, int len)
 	for (i = 0; i < len - 1; i++)
 	{
 		index = i>ap_diff ? i : ap_diff;
-		int firstdiff = GetAP(arr, index, index + 1);
-		int seconddiif = GetAP(arr, index + 1, index + 2);
-		if (firstdiff == seconddiif && ap)
+		if (GetAP(arr, index + 1, index + 2) == GetAP(arr, index, index + 1) && ap)
 		{
 			final[pointer++] = index;
-			while (firstdiff == seconddiif)
+			while (GetAP(arr, index + 1, index + 2) == GetAP(arr, index, index + 1))
 				index++;
 			final[pointer++] = index + 1;
 			ap_diff = index + 1;
 			ap--;
-			firstdiff = GetAP(arr, index, index + 1);
-			seconddiif = GetAP(arr, index + 1, index + 2);
 		}
 		index = i;
 		if (arr[index + 2] / arr[index + 1] == arr[index + 1] / arr[index] && arr[index + 1] % arr[index] == 0 && gp)
