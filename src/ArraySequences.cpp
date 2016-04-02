@@ -30,15 +30,10 @@ Difficulty : Medium
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-int CheckAP(int *a,int start,int end)
+int GetAP(int *a,int start,int end)
 {
-	int iDiff = a[1] - a[0];
-	for (int i = start; i<end - 1; i++)
-	{
-		if ((a[i + 1] - a[i]) != iDiff)
-			return -1;
-	}
-	return 1;
+	int iDiff = a[end] - a[start];
+	return iDiff;
 }
 int CheckGP(int *a,int len)
 {
@@ -50,23 +45,38 @@ int CheckGP(int *a,int len)
 	}
 	return 1;
 }
-
-int * find_sequences(int *arr, int len){
+int * find_sequences(int *arr, int len)
+{
 	//Return final array which has 6indexes [AP1_S,AP1_E,AP2_S,AP2_E,GP1_S,GP2_E]
-	if (arr==NULL||len<3)
-	return NULL;
-	int index = 0,templen=len;
-	int AP1_S=0, AP1_E=0, AP2_S=0, AP2_E=0, GP1_S=0, GP2_E=0;
-	int Apmax = 0;
-	for (int i = 0; i < len-2; i++){
-		int j = i + 1;
-		int curr = CheckAP(arr, i, j);
-		while (curr == 1){
-			AP1_E = (j>Apmax) ? j : AP1_E;
-			AP1_S = i;
-			curr = CheckAP(arr, i, j);
-			j++;
+	int *final, pointer = 0, index, i, gp = 1, ap = 2, ap_diff = 0;
+	final = (int *)malloc(sizeof(int)* 6);
+	if (arr == NULL || len < 0)
+		return NULL;
+	for (i = 0; i < len - 1; i++)
+	{
+		index = i>ap_diff ? i : ap_diff;
+		int firstdiff = GetAP(arr, index, index + 1);
+		int seconddiif = GetAP(arr, index + 1, index + 2);
+		if (firstdiff == seconddiif && ap)
+		{
+			final[pointer++] = index;
+			while (firstdiff == seconddiif)
+				index++;
+			final[pointer++] = index + 1;
+			ap_diff = index + 1;
+			ap--;
+			firstdiff = GetAP(arr, index, index + 1);
+			seconddiif = GetAP(arr, index + 1, index + 2);
+		}
+		index = i;
+		if (arr[index + 2] / arr[index + 1] == arr[index + 1] / arr[index] && arr[index + 1] % arr[index] == 0 && gp)
+		{
+			final[4] = index;
+			while (arr[index + 2] / arr[index + 1] == arr[index + 1] / arr[index] && arr[index + 1] % arr[index] == 0)
+				index++;
+			final[5] = index + 1;
+			gp--;
 		}
 	}
-
+	return final;
 }
